@@ -17,5 +17,7 @@ namespace mi
 		int minorVersion;
 		int majorVersion;
 		int versionBuild;
+
+		friend class MachineInfo;
 	};
 }

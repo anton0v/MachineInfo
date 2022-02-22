@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <windows.h>
-#include <VersionHelpers.h>
 #include "SystemInfo.h"
 
 using namespace std;
@@ -37,7 +36,10 @@ namespace mi
 			majorVersion = dwMajorV;
 			versionBuild = (DWORD)(LOWORD(dwBulid));
 		}
+
 	}
+
+
 }
 
 //other variants
