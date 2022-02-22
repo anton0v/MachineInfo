@@ -15,10 +15,7 @@ namespace mi
 
 	SystemInfo::SystemInfo()
 	{
-		unsigned long size = 256;
-		char buff[256];
-		GetComputerNameA(buff, &size);
-		name = buff;
+		name = L"";
 		pRtlGetNtVersionNumbers RtlGetNtVersionNumbers;
 		DWORD dwMinorV, dwMajorV;
 		DWORD dwBulid;
@@ -36,28 +33,49 @@ namespace mi
 			majorVersion = dwMajorV;
 			versionBuild = (DWORD)(LOWORD(dwBulid));
 		}
-
 	}
 
+	void SystemInfo::Init(IWbemLocator *pLocator, IWbemServices *pServices)
+	{
+		HRESULT hres;
 
+		IEnumWbemClassObject* pEnumerator = NULL;
+		hres = pServices->ExecQuery(
+			bstr_t("WQL"),
+			bstr_t("SELECT * FROM Win32_ComputerSystem"),
+			WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY,
+			NULL,
+			&pEnumerator);
+
+		if (FAILED(hres))
+		{
+			pServices->Release();
+			pLocator->Release();
+			CoUninitialize();
+			throw exception("Query for operating system name failed.");
+		}
+
+		IWbemClassObject *pclsObj = NULL;
+		ULONG uReturn = 0;
+
+		while (pEnumerator)
+		{
+			HRESULT hr = pEnumerator->Next(WBEM_INFINITE, 1,
+				&pclsObj, &uReturn);
+
+			if (0 == uReturn)
+			{
+				break;
+			}
+
+			VARIANT vtProp;
+
+			hr = pclsObj->Get(L"Name", 0, &vtProp, 0, 0);
+			//wcout << " OS Name : " << vtProp.bstrVal << endl;
+			name = vtProp.bstrVal;
+			VariantClear(&vtProp);
+
+			pclsObj->Release();
+		}
+	}
 }
-
-//other variants
-//DWORD dwVersion;
-//DWORD dwMinorV, dwMajorV;
-//DWORD dwBulid;
-//
-//dwVersion = GetVersion();
-//dwMinorV = (DWORD)(HIBYTE(LOWORD(dwVersion)));
-//dwMajorV = (DWORD)(LOBYTE(LOWORD(dwVersion)));
-//dwBulid = (DWORD)(HIWORD(dwVersion));
-//version = dwVersion;
-//version = hexadecimalToDecimal(to_string(version));
-
-//OSVERSIONINFOEX versionInfo;
-//ZeroMemory(&versionInfo, sizeof(OSVERSIONINFOEX));
-//versionInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-//GetVersionEx((LPOSVERSIONINFO)(&versionInfo));
-//DWORD dwBuild = versionInfo.dwBuildNumber;
-//DWORD dwMinorV = versionInfo.dwMinorVersion;
-//DWORD dwMajorV = versionInfo.dwMajorVersion;

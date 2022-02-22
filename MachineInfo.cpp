@@ -8,6 +8,8 @@ namespace mi
 	MachineInfo::MachineInfo()
 	{
 		WMIConnect();
+
+		sysInf.Init(pLocator, pServices);
 	}
 
 	void MachineInfo::WMIConnect()
@@ -57,7 +59,7 @@ namespace mi
 			NULL,
 			0,
 			0,
-			&pService
+			&pServices
 		);
 		if (FAILED(hres))
 		{
@@ -67,7 +69,7 @@ namespace mi
 		}
 
 		hres = CoSetProxyBlanket(
-			pService,
+			pServices,
 			RPC_C_AUTHN_WINNT,
 			RPC_C_AUTHZ_NONE,
 			NULL,
@@ -79,7 +81,7 @@ namespace mi
 
 		if (FAILED(hres))
 		{
-			pService->Release();
+			pServices->Release();
 			pLocator->Release();
 			CoUninitialize();
 			throw exception("Could not set proxy blanket.");

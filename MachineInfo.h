@@ -16,14 +16,15 @@ namespace mi
 		MachineInfo();
 		~MachineInfo()
 		{
-			pService->Release();
+			pServices->Release();
 			pLocator->Release();
 			CoUninitialize();
 		}
+		wstring getComputerName() { return sysInf.name; };
 	private:
 		void WMIConnect();
 		IWbemLocator *pLocator;
-		IWbemServices *pService;
+		IWbemServices *pServices;
 		SystemInfo sysInf;
 	};
 }
