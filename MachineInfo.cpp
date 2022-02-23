@@ -9,7 +9,7 @@ namespace mi
 	{
 		WMIConnect();
 
-		sysInf.Init(pLocator, pServices);
+		systemInfo.Init(pLocator, pServices);
 	}
 
 	void MachineInfo::WMIConnect()

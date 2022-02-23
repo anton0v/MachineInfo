@@ -20,11 +20,11 @@ namespace mi
 			pLocator->Release();
 			CoUninitialize();
 		}
-		wstring getComputerName() { return sysInf.name; };
+		
+		SystemInfo systemInfo;
 	private:
 		void WMIConnect();
 		IWbemLocator *pLocator;
 		IWbemServices *pServices;
-		SystemInfo sysInf;
 	};
 }

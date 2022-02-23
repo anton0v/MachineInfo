@@ -16,6 +16,8 @@ namespace mi
 	SystemInfo::SystemInfo()
 	{
 		name = L"";
+		model = L"";
+		manufacturer = L"";
 		pRtlGetNtVersionNumbers RtlGetNtVersionNumbers;
 		DWORD dwMinorV, dwMajorV;
 		DWORD dwBulid;
@@ -45,14 +47,15 @@ namespace mi
 			bstr_t("SELECT * FROM Win32_ComputerSystem"),
 			WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY,
 			NULL,
-			&pEnumerator);
+			&pEnumerator
+		);
 
 		if (FAILED(hres))
 		{
 			pServices->Release();
 			pLocator->Release();
 			CoUninitialize();
-			throw exception("Query for operating system name failed.");
+			throw exception("Query for computer system name failed.");
 		}
 
 		IWbemClassObject *pclsObj = NULL;
@@ -71,8 +74,11 @@ namespace mi
 			VARIANT vtProp;
 
 			hr = pclsObj->Get(L"Name", 0, &vtProp, 0, 0);
-			//wcout << " OS Name : " << vtProp.bstrVal << endl;
 			name = vtProp.bstrVal;
+			hr = pclsObj->Get(L"Model", 0, &vtProp, 0, 0);
+			model = vtProp.bstrVal;
+			hr = pclsObj->Get(L"Manufacturer", 0, &vtProp, 0, 0);
+			manufacturer = vtProp.bstrVal;
 			VariantClear(&vtProp);
 
 			pclsObj->Release();

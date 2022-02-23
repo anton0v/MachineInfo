@@ -1,5 +1,5 @@
 #include <iostream>
-#include <conio.h>//
+#include <conio.h>
 #include <locale>
 #include "MachineInfo.h"
 
@@ -11,7 +11,9 @@ int main()
 	wcin.imbue(locale("rus_rus.866"));
 
 	mi::MachineInfo minf;
-	wcout << minf.getSystemName() << endl;
+	wcout << minf.systemInfo.getName() << endl;
+	wcout << minf.systemInfo.getModel() << endl;
+	wcout << minf.systemInfo.getManufacturer() << endl;
 	getch();
 	return 0;
 }
