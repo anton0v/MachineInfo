@@ -55,7 +55,7 @@ namespace mi
 			pServices->Release();
 			pLocator->Release();
 			CoUninitialize();
-			throw exception("Query for computer system name failed.");
+			throw exception("Query for computer system info failed.");
 		}
 
 		IWbemClassObject *pclsObj = NULL;

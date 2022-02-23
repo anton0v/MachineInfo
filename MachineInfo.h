@@ -5,6 +5,7 @@
 #include <exception>
 #include <string>
 #include "SystemInfo.h"
+#include "ProcessorInfo.h"
 
 #pragma comment(lib, "wbemuuid.lib")
 
@@ -22,6 +23,7 @@ namespace mi
 		}
 		
 		SystemInfo systemInfo;
+		ProcessorInfo processorInfo;
 	private:
 		void WMIConnect();
 		IWbemLocator *pLocator;

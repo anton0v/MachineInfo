@@ -10,6 +10,7 @@ namespace mi
 		WMIConnect();
 
 		systemInfo.Init(pLocator, pServices);
+		processorInfo.Init(pLocator, pServices);
 	}
 
 	void MachineInfo::WMIConnect()
