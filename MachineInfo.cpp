@@ -9,8 +9,11 @@ namespace mi
 	{
 		WMIConnect();
 
-		systemInfo.Init(pLocator, pServices);
-		processorInfo.Init(pLocator, pServices);
+		SystemInfoGenerator systemGenerator;
+		systemInfo = systemGenerator.getSystemInfo(pLocator, pServices);
+
+		ProcessorInfoGenerator procInfGenerator;
+		processorInfo = procInfGenerator.getProcessorInfo(pLocator, pServices);
 	}
 
 	void MachineInfo::WMIConnect()

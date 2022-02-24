@@ -4,8 +4,8 @@
 #include <iostream>
 #include <exception>
 #include <string>
-#include "SystemInfo.h"
-#include "ProcessorInfo.h"
+#include "SystemInfoGenerator.h"
+#include "ProcessorInfoGenerator.h"
 
 #pragma comment(lib, "wbemuuid.lib")
 

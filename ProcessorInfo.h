@@ -11,14 +11,14 @@ namespace mi
 	{
 	public:
 		ProcessorInfo();
-		wstring getName() { return name; };
-		wstring getManufacturer() { return manufacturer; };
-		wstring getVersion() { return version; };
-		int getArchitecture() { return architecture; };
-		int getMaxClockSpeed() { return maxClockSpeed; };
-		int getDataWidth() { return dataWidth; };
-		int getFamily() { return family; };
-		int getCoresCount() { return coresCount; };
+		wstring getName() const { return name; };
+		wstring getManufacturer() const { return manufacturer; };
+		wstring getVersion() const { return version; };
+		int getArchitecture() const { return architecture; };
+		int getMaxClockSpeed() const { return maxClockSpeed; };
+		int getDataWidth() const { return dataWidth; };
+		int getFamily() const { return family; };
+		int getCoresCount() const { return coresCount; };
 	private:
 		wstring name;
 		wstring manufacturer;
@@ -28,8 +28,7 @@ namespace mi
 		int dataWidth;
 		int family;
 		int coresCount;
-		void Init(IWbemLocator *, IWbemServices *);
 
-		friend class MachineInfo;
+		friend class ProcessorInfoGenerator;
 	};
 }

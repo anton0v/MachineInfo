@@ -11,11 +11,11 @@ namespace mi
 	{
 	public:
 		SystemInfo();
-		wstring getName() { return name; };
-		wstring getModel() { return model; };
-		wstring getManufacturer() { return manufacturer; };
-		string getVersion() { return (to_string(majorVersion) + "." + to_string(minorVersion)); };
-		int getVersionBuild() { return versionBuild; };
+		wstring getName() const { return name; };
+		wstring getModel() const { return model; };
+		wstring getManufacturer() const { return manufacturer; };
+		string getVersion() const { return (to_string(majorVersion) + "." + to_string(minorVersion)); };
+		int getVersionBuild() const { return versionBuild; };
 	private:
 		wstring name;
 		wstring model;
@@ -23,8 +23,7 @@ namespace mi
 		int minorVersion;
 		int majorVersion;
 		int versionBuild;
-		void Init(IWbemLocator *, IWbemServices *);
 
-		friend class MachineInfo;
+		friend class SystemInfoGenerator;
 	};
 }
