@@ -5,7 +5,11 @@ using namespace std;
 
 namespace mi
 {
-	MachineInfo::MachineInfo()
+	MachineInfo::MachineInfo() :
+		initialized(false)
+	{}
+
+	void MachineInfo::Init()
 	{
 		WMIConnect();
 
@@ -14,6 +18,13 @@ namespace mi
 
 		ProcessorInfoGenerator procInfGenerator;
 		processorInfo = procInfGenerator.getProcessorInfo(pLocator, pServices);
+
+		initialized = true;
+	}
+
+	bool MachineInfo::isInitialized()
+	{
+		return initialized;
 	}
 
 	void MachineInfo::WMIConnect()

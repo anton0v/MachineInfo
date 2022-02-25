@@ -1,15 +1,10 @@
+#include <exception>
 #include "ProcessorInfoGenerator.h"
 
 namespace mi
 {
-	ProcessorInfoGenerator::ProcessorInfoGenerator() :
-		isGenerated(false)
-	{}
-
 	ProcessorInfo ProcessorInfoGenerator::getProcessorInfo(IWbemLocator *pLocator, IWbemServices *pServices)
 	{
-		//if (isGenerated) return NULL; ?
-
 		HRESULT hres;
 
 		IEnumWbemClassObject* pEnumerator = NULL;
@@ -26,7 +21,7 @@ namespace mi
 			pServices->Release();
 			pLocator->Release();
 			CoUninitialize();
-			throw exception("Query for processor failed.");
+			throw std::exception("Query for processor failed.");
 		}
 
 		IWbemClassObject *pclsObj = NULL;

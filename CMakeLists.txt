@@ -7,4 +7,4 @@ add_library(MILib STATIC SystemInfoGenerator.h SystemInfoGenerator.cpp
 						 ProcessorInfoGenerator.h ProcessorInfoGenerator.cpp
 						 ProcessorInfo.h ProcessorInfo.cpp
 						 )
-target_link_libraries(MachineInfo MILib)
+target_link_libraries(MachineInfo MILib wbemuuid.lib)

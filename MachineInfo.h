@@ -3,11 +3,8 @@
 #include <Wbemidl.h>
 #include <iostream>
 #include <exception>
-#include <string>
 #include "SystemInfoGenerator.h"
 #include "ProcessorInfoGenerator.h"
-
-#pragma comment(lib, "wbemuuid.lib")
 
 namespace mi
 {
@@ -17,10 +14,17 @@ namespace mi
 		MachineInfo();
 		~MachineInfo()
 		{
-			pServices->Release();
-			pLocator->Release();
-			CoUninitialize();
+			if (initialized)
+			{
+				pServices->Release();
+				pLocator->Release();
+				CoUninitialize();
+			}
 		}
+
+		void Init();
+
+		bool isInitialized();
 		
 		SystemInfo systemInfo;
 		ProcessorInfo processorInfo;
@@ -28,5 +32,6 @@ namespace mi
 		void WMIConnect();
 		IWbemLocator *pLocator;
 		IWbemServices *pServices;
+		bool initialized;
 	};
 }

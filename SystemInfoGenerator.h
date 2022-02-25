@@ -1,4 +1,6 @@
 #pragma once
+#include <comdef.h>
+#include <Wbemidl.h>
 #include "SystemInfo.h"
 
 namespace mi

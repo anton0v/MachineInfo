@@ -1,4 +1,6 @@
 #pragma once
+#include <comdef.h>
+#include <Wbemidl.h>
 #include "ProcessorInfo.h"
 
 namespace mi
@@ -6,9 +8,6 @@ namespace mi
 	class ProcessorInfoGenerator
 	{
 	public:
-		ProcessorInfoGenerator();
 		ProcessorInfo getProcessorInfo(IWbemLocator *, IWbemServices *);
-	private:
-		bool isGenerated;
 	};
 }
