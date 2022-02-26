@@ -5,6 +5,7 @@
 #include <exception>
 #include "SystemInfoGenerator.h"
 #include "ProcessorInfoGenerator.h"
+#include "OperatingSystemInfoGenerator.h"
 
 namespace mi
 {
@@ -28,6 +29,7 @@ namespace mi
 		
 		SystemInfo systemInfo;
 		ProcessorInfo processorInfo;
+		OperatingSystemInfo operatingSystemInfo;
 	private:
 		void WMIConnect();
 		IWbemLocator *pLocator;

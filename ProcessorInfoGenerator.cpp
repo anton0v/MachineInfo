@@ -56,7 +56,7 @@ namespace mi
 			pProcInf.maxClockSpeed = vtProp.intVal;
 
 			hr = pclsObj->Get(L"DataWidth", 0, &vtProp, 0, 0);
-			pProcInf.dataWidth = vtProp.intVal;
+			pProcInf.bitDepth = vtProp.intVal;
 
 			hr = pclsObj->Get(L"Family", 0, &vtProp, 0, 0);
 			pProcInf.family = static_cast<ProcessorInfo::CPUFamily>(vtProp.intVal);

@@ -19,6 +19,9 @@ namespace mi
 		ProcessorInfoGenerator procInfGenerator;
 		processorInfo = procInfGenerator.getProcessorInfo(pLocator, pServices);
 
+		OperatingSystemInfoGenerator OSInfGenerator;
+		operatingSystemInfo = OSInfGenerator.getOperatingSystemInfo(pLocator, pServices);
+
 		initialized = true;
 	}
 
