@@ -10,6 +10,12 @@ int main()
 	std::wcin.imbue(std::locale("rus_rus.866"));
 
 	mi::MachineInfo myMachine;
+
+	myMachine.Init();
+
+	std::cout << myMachine.processorInfo.getIntFamily() << std::endl;
+	std::wcout << myMachine.processorInfo.getFamily() << std::endl;
+
 	getch();
 	return 0;
 }

@@ -50,7 +50,7 @@ namespace mi
 			pProcInf.version = vtProp.bstrVal;
 
 			hr = pclsObj->Get(L"Architecture", 0, &vtProp, 0, 0);
-			pProcInf.architecture = vtProp.intVal;
+			pProcInf.architecture = static_cast<ProcessorInfo::CPUArchitecture>(vtProp.intVal);
 
 			hr = pclsObj->Get(L"MaxClockSpeed", 0, &vtProp, 0, 0);
 			pProcInf.maxClockSpeed = vtProp.intVal;
@@ -59,7 +59,7 @@ namespace mi
 			pProcInf.dataWidth = vtProp.intVal;
 
 			hr = pclsObj->Get(L"Family", 0, &vtProp, 0, 0);
-			pProcInf.family = vtProp.intVal;
+			pProcInf.family = static_cast<ProcessorInfo::CPUFamily>(vtProp.intVal);
 
 			hr = pclsObj->Get(L"NumberOfCores", 0, &vtProp, 0, 0);
 			pProcInf.coresCount = vtProp.intVal;
