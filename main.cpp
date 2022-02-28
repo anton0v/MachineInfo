@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <locale>
 #include <string>
+#include <vector>
 #include "MachineInfo.h"
 
 int main()

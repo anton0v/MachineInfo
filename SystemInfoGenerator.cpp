@@ -20,7 +20,7 @@ namespace mi
 			pServices->Release();
 			pLocator->Release();
 			CoUninitialize();
-			throw exception("Query for computer system info failed.");
+			throw std::exception("Query for computer system info failed.");
 		}
 
 		IWbemClassObject *pclsObj = NULL;
