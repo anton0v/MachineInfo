@@ -13,5 +13,7 @@ add_library(MILib STATIC SystemInfoGenerator.h SystemInfoGenerator.cpp
 						 GPUInfo.h GPUInfo.cpp
 						 MonitorInfoGenerator.h MonitorInfoGenerator.cpp
 						 MonitorInfo.h MonitorInfo.cpp
+						 DriveInfoGenerator.h DriveInfoGenerator.cpp
+						 DriveInfo.h DriveInfo.cpp
 						 )
 target_link_libraries(MachineInfo MILib wbemuuid.lib)

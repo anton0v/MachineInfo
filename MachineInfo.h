@@ -9,6 +9,7 @@
 #include "OperatingSystemInfoGenerator.h"
 #include "GPUInfoGenerator.h"
 #include "MonitorInfoGenerator.h"
+#include "DriveInfoGenerator.h"
 
 namespace mi
 {
@@ -35,6 +36,7 @@ namespace mi
 		OperatingSystemInfo operatingSystemInfo;
 		std::vector<GPUInfo> videoCardsInfo;
 		std::vector<MonitorInfo> monitorsInfo;
+		std::vector<DriveInfo> drivesInfo;
 	private:
 		void WMIConnect();
 		IWbemLocator *pLocator;

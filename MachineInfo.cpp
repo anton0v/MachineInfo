@@ -28,7 +28,8 @@ namespace mi
 		MonitorInfoGenerator monitorGenerator;
 		monitorsInfo = monitorGenerator.getMonitorInfo(pLocator, pServices);
 
-
+		DriveInfoGenerator driveGenerator;
+		drivesInfo = driveGenerator.getDriveInfo(pLocator, pServices);
 
 		initialized = true;
 	}

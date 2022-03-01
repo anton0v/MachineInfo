@@ -14,8 +14,8 @@ int main()
 
 	myMachine.Init();
 
-	std::wcout << myMachine.monitorsInfo.at(0).getAvailability() << std::endl;
-	std::wcout << myMachine.monitorsInfo.at(1).getAvailability() << std::endl;
+	std::wcout << myMachine.drivesInfo.at(0).getType() << std::endl;
+	std::wcout << myMachine.drivesInfo.at(1).getType() << std::endl;
 
 	getch();
 	return 0;
