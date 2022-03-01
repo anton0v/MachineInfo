@@ -7,12 +7,12 @@ namespace mi
 	{
 	public:
 		GPUInfo();
-		virtual std::wstring getDACType() const override { return DACType; };
-		virtual int getMemory() const override { return memory; };
-		virtual int getBitsPerPixel() const override { return bitsPerPixel; };
-		virtual int getRefreshRate() const override { return refreshRate; };
-		virtual int getHorizontalResolution() const override { return horizontalResolution; };
-		virtual int getVerticalResolution() const override { return verticalResolution; };
+		std::wstring getDACType() const  { return DACType; };
+		int getMemory() const  { return memory; };
+		int getBitsPerPixel() const  { return bitsPerPixel; };
+		int getRefreshRate() const  { return refreshRate; };
+		int getHorizontalResolution() const  { return horizontalResolution; };
+		int getVerticalResolution() const  { return verticalResolution; };
 	private:
 		int memory;
 		int bitsPerPixel;

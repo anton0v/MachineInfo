@@ -5,21 +5,14 @@ namespace mi
 {
 	class DisplayDeviceInfo
 	{
-	public:DisplayDeviceInfo() :
+	public:
+		DisplayDeviceInfo() :
 			name(L""),
 			deviceAvailability(DeviceAvailability::Unknown)
 		{}
-		virtual std::wstring getName() const { return name; };
-		virtual std::wstring getDACType() const { return L""; };
-		virtual std::wstring getDeviceID() const { return L""; };
-		virtual std::wstring getAvailability() const { return L"Unknown"; };
-		virtual int getMemory() const { return 0; };
-		virtual int getBitsPerPixel() const { return 0; };
-		virtual int getRefreshRate() const { return 0; };
-		virtual int getHorizontalResolution() const { return 0; };
-		virtual int getVerticalResolution() const { return 0; };
-		virtual int getScreenWidth() const { return 0; };
-		virtual int getScreenHeight() const { return 0; };
+		std::wstring getName() const { return name; };
+		std::wstring getAvailability() const;
+		int  getIntAvailability() const { return static_cast<int>(deviceAvailability); };
 
 		enum class DeviceAvailability
 		{
@@ -49,5 +42,18 @@ namespace mi
 	protected:
 		std::wstring name;
 		DeviceAvailability deviceAvailability;
+
+		friend class GPUInfoGenerator;
+		friend class MonitorInfoGenerator;
 	};
 }
+
+//virtual std::wstring getDACType() const { return L""; };
+//virtual std::wstring getDeviceID() const { return L""; };
+//virtual int getMemory() const { return 0; };
+//virtual int getBitsPerPixel() const { return 0; };
+//virtual int getRefreshRate() const { return 0; };
+//virtual int getHorizontalResolution() const { return 0; };
+//virtual int getVerticalResolution() const { return 0; };
+//virtual int getScreenWidth() const { return 0; };
+//virtual int getScreenHeight() const { return 0; };

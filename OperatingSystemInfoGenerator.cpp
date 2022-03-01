@@ -20,7 +20,7 @@ namespace mi
 			pServices->Release();
 			pLocator->Release();
 			CoUninitialize();
-			throw std::exception("Query for processor failed.");
+			throw std::exception("Query for os failed.");
 		}
 
 		IWbemClassObject *pclsObj = NULL;

@@ -20,7 +20,7 @@ namespace mi
 			pServices->Release();
 			pLocator->Release();
 			CoUninitialize();
-			throw std::exception("Query for processor failed.");
+			throw std::exception("Query for GPU failed.");
 		}
 
 		IWbemClassObject *pclsObj = NULL;
@@ -50,7 +50,7 @@ namespace mi
 			gpu.deviceAvailability = static_cast<GPUInfo::DeviceAvailability>(vtProp.intVal);
 
 			hr = pclsObj->Get(L"AdapterRAM", 0, &vtProp, 0, 0);
-			gpu.memory = vtProp.intVal / 1024;
+			gpu.memory = (vtProp.uintVal / 1024 / 1024);
 
 			if (gpu.deviceAvailability == GPUInfo::DeviceAvailability::Running_Or_Full_Power)
 			{

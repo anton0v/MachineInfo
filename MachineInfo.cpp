@@ -22,6 +22,14 @@ namespace mi
 		OperatingSystemInfoGenerator OSInfGenerator;
 		operatingSystemInfo = OSInfGenerator.getOperatingSystemInfo(pLocator, pServices);
 
+		GPUInfoGenerator GPUGenerator;
+		videoCardsInfo = GPUGenerator.getCPUInfo(pLocator, pServices);
+
+		MonitorInfoGenerator monitorGenerator;
+		monitorsInfo = monitorGenerator.getMonitorInfo(pLocator, pServices);
+
+
+
 		initialized = true;
 	}
 
