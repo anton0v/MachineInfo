@@ -13,7 +13,7 @@ namespace mi
 		build(0)
 	{}
 
-	std::wstring OperatingSystemInfo::getLanguage()
+	std::wstring OperatingSystemInfo::getLanguage() const
 	{
 		switch (language)
 		{

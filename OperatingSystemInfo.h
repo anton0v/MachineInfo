@@ -8,14 +8,14 @@ namespace mi
 	public:
 		OperatingSystemInfo();
 		
-		std::wstring getName() { return name; };
-		std::wstring getManufacturer() { return manufacturer; };
-		std::wstring getVersion() { return version; };
-		std::wstring getLanguage();
-		int getBitDepth() { return bitDepth; };
-		int getMajorVersion() { return majorVersion; };
-		int getMinorVersion() { return minorVersion; };
-		int getBuild() { return build; };
+		std::wstring getName() const { return name; };
+		std::wstring getManufacturer() const { return manufacturer; };
+		std::wstring getVersion() const { return version; };
+		std::wstring getLanguage() const;
+		int getBitDepth() const { return bitDepth; };
+		int getMajorVersion() const { return majorVersion; };
+		int getMinorVersion() const { return minorVersion; };
+		int getBuild() const { return build; };
 
 		enum class OSLanguage
 		{

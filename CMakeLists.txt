@@ -15,5 +15,6 @@ add_library(MILib STATIC SystemInfoGenerator.h SystemInfoGenerator.cpp
 						 MonitorInfo.h MonitorInfo.cpp
 						 DriveInfoGenerator.h DriveInfoGenerator.cpp
 						 DriveInfo.h DriveInfo.cpp
+						 MD5Hash.h MD5Hash.cpp
 						 )
 target_link_libraries(MachineInfo MILib wbemuuid.lib)
