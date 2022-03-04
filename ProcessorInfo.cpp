@@ -8,7 +8,8 @@ namespace mi
 		version(L""),
 		architecture(CPUArchitecture::UNKNOWN),
 		maxClockSpeed(0),
-		dataWidth(0),
+		currentClockSpeed(0),
+		bitDepth(0),
 		family(CPUFamily::Unknown),
 		coresCount(0)
 	{}
@@ -30,6 +31,8 @@ namespace mi
 		case CPUArchitecture::X64 : 
 			return L"x64";
 		case CPUArchitecture::UNKNOWN :
+			return L"Unknown";
+		default :
 			return L"Unknown";
 		}
 	}

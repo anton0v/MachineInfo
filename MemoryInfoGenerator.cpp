@@ -1,15 +1,15 @@
-#include "SystemInfoGenerator.h"
+#include "MemoryInfoGenerator.h"
 
 namespace mi
 {
-	SystemInfo SystemInfoGenerator::getSystemInfo(IWbemLocator *pLocator, IWbemServices *pServices)
+	std::vector<MemoryInfo> MemoryInfoGenerator::getMemoryInfo(IWbemLocator *pLocator, IWbemServices *pServices)
 	{
 		HRESULT hres;
 
 		IEnumWbemClassObject* pEnumerator = NULL;
 		hres = pServices->ExecQuery(
 			bstr_t("WQL"),
-			bstr_t("SELECT * FROM Win32_ComputerSystem"),
+			bstr_t("SELECT * FROM Win32_PhysicalMemory"),
 			WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY,
 			NULL,
 			&pEnumerator
@@ -20,12 +20,13 @@ namespace mi
 			pServices->Release();
 			pLocator->Release();
 			CoUninitialize();
-			throw std::exception("Query for computer system info failed.");
+			throw std::exception("Query for memory failed.");
 		}
 
 		IWbemClassObject *pclsObj = NULL;
 		ULONG uReturn = 0;
-		SystemInfo sysInf;
+		std::vector<MemoryInfo> vectorMemory;
+		MemoryInfo memory;
 
 		while (pEnumerator)
 		{
@@ -38,21 +39,21 @@ namespace mi
 			}
 
 			VARIANT vtProp;
+			std::wstring temp;
 
 			hr = pclsObj->Get(L"Name", 0, &vtProp, 0, 0);
-			sysInf.name = vtProp.bstrVal;
-
-			hr = pclsObj->Get(L"Model", 0, &vtProp, 0, 0);
-			sysInf.model = vtProp.bstrVal;
+			memory.name = vtProp.bstrVal;
 
 			hr = pclsObj->Get(L"Manufacturer", 0, &vtProp, 0, 0);
-			sysInf.manufacturer = vtProp.bstrVal;
+			memory.manufacturer = vtProp.bstrVal;
 
-			VariantClear(&vtProp);
+			hr = pclsObj->Get(L"Capacity", 0, &vtProp, 0, 0);
+			memory.memory = std::stoull(vtProp.bstrVal) / 1024;
+
+			vectorMemory.push_back(memory);
 
 			pclsObj->Release();
 		}
-
-		return sysInf;
+		return vectorMemory;
 	}
 }
