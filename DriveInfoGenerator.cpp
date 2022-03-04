@@ -56,10 +56,10 @@ namespace mi
 				drive.fileSystem = vtProp.bstrVal;
 
 				hr = pclsObj->Get(L"Size", 0, &vtProp, 0, 0);
-				drive.totalSpace = vtProp.uintVal / 1024 / 1024 / 1024;
+				drive.totalSpace = std::stoull(vtProp.bstrVal) / 1024 / 1024 / 1024;
 
-				hr = pclsObj->Get(L"PixelPerXLogicalInch", 0, &vtProp, 0, 0);
-				drive.freeSpace = vtProp.uintVal / 1024 / 1024 / 1024;
+				hr = pclsObj->Get(L"FreeSpace", 0, &vtProp, 0, 0);
+				drive.freeSpace = std::stoull(vtProp.bstrVal) / 1024 / 1024 / 1024;
 			}
 
 			vectorDrive.push_back(drive);

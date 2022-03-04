@@ -55,6 +55,9 @@ namespace mi
 			hr = pclsObj->Get(L"MaxClockSpeed", 0, &vtProp, 0, 0);
 			pProcInf.maxClockSpeed = vtProp.intVal;
 
+			hr = pclsObj->Get(L"CurrentClockSpeed", 0, &vtProp, 0, 0);
+			pProcInf.currentClockSpeed = vtProp.intVal;
+
 			hr = pclsObj->Get(L"DataWidth", 0, &vtProp, 0, 0);
 			pProcInf.bitDepth = vtProp.intVal;
 

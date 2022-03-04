@@ -4,16 +4,18 @@
 #include <string>
 #include <vector>
 #include "MachineInfo.h"
-#include "MD5Hash.h"
 
 int main()
 {
 	std::wcout.imbue(std::locale("rus_rus.866"));
 	std::wcin.imbue(std::locale("rus_rus.866"));
 
-	std::cout << mi::md5(L"Собака") << std::endl;
-	std::cout << mi::md5(L"Собака") << std::endl;
+	mi::MachineInfo myMachine;
 
-	getch();
+	myMachine.Init();
+
+	myMachine.getInfo();
+
+	//getch();
 	return 0;
 }

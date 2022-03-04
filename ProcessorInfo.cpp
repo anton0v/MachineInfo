@@ -8,6 +8,7 @@ namespace mi
 		version(L""),
 		architecture(CPUArchitecture::UNKNOWN),
 		maxClockSpeed(0),
+		currentClockSpeed(0),
 		bitDepth(0),
 		family(CPUFamily::Unknown),
 		coresCount(0)

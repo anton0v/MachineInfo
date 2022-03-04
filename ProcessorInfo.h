@@ -13,6 +13,7 @@ namespace mi
 		std::wstring getArchitecture() const;
 		std::wstring getFamily() const;
 		int getMaxClockSpeed() const { return maxClockSpeed; }
+		int getCurrentClockSpeed() const { return currentClockSpeed; }
 		int getDataWidth() const { return bitDepth; }
 		int getCoresCount() const { return coresCount; }
 		int getIntFamily() const { return static_cast<int>(family); }
@@ -230,6 +231,7 @@ namespace mi
 		CPUFamily family;
 
 		int maxClockSpeed;
+		int currentClockSpeed;
 		int bitDepth;
 		int coresCount;
 

@@ -10,6 +10,8 @@
 #include "GPUInfoGenerator.h"
 #include "MonitorInfoGenerator.h"
 #include "DriveInfoGenerator.h"
+#include "MemoryInfoGenerator.h"
+#include "MD5Hash.h"
 
 namespace mi
 {
@@ -29,6 +31,8 @@ namespace mi
 
 		void Init();
 
+		void getInfo();
+
 		bool isInitialized();
 		
 		SystemInfo systemInfo;
@@ -37,10 +41,15 @@ namespace mi
 		std::vector<GPUInfo> videoCardsInfo;
 		std::vector<MonitorInfo> monitorsInfo;
 		std::vector<DriveInfo> drivesInfo;
+		std::vector<MemoryInfo> memoryInfo;
 	private:
 		void WMIConnect();
+		void getUUID();
+		unsigned int memory;
+		std::wstring UUID;
 		IWbemLocator *pLocator;
 		IWbemServices *pServices;
+		std::string ID;
 		bool initialized;
 	};
 }
