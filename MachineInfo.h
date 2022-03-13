@@ -29,7 +29,6 @@ namespace mi
 			}
 		}
 		void Init();
-		void getInfo();
 		bool isInitialized();
 		SystemInfo systemInfo;
 		ProcessorInfo processorInfo;
@@ -47,5 +46,9 @@ namespace mi
 		IWbemServices *pServices;
 		std::string ID;
 		bool initialized;
+
+		friend void printMachineInfo(const MachineInfo&);
 	};
+
+	void printMachineInfo(const MachineInfo&);
 }

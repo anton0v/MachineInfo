@@ -12,7 +12,7 @@ int main()
 
 	myMachine.Init();
 	
-	myMachine.getInfo();
+	mi::printMachineInfo(myMachine);
 
 	return 0;
 }
