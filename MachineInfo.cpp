@@ -7,7 +7,9 @@ namespace mi
 		UUID(L""),
 		ID(""),
 		initialized(false),
-		memory(0)
+		memory(0),
+		pLocator(NULL),
+		pServices(NULL)
 	{}
 
 	void MachineInfo::Init()
@@ -35,101 +37,17 @@ namespace mi
 		MemoryInfoGenerator memoryGenerator;
 		memoryInfo = memoryGenerator.getMemoryInfo(pLocator, pServices);
 
-		for (std::vector<MemoryInfo>::iterator iter = memoryInfo.begin(); iter < memoryInfo.end(); iter++)
+		for (auto iter = memoryInfo.cbegin(); iter != memoryInfo.cend(); iter++)
 			memory += iter->getMemory();
 
 		getUUID();
 		std::wstring strForMD5 = UUID + processorInfo.getName();
-		for (std::vector<GPUInfo>::iterator iter = videoCardsInfo.begin(); iter < videoCardsInfo.end(); iter++)
+		for (auto iter = videoCardsInfo.cbegin(); iter != videoCardsInfo.cend(); iter++)
 			strForMD5 += iter->getName();
 
 		ID = md5(strForMD5);
 
 		initialized = true;
-	}
-
-	void MachineInfo::getInfo()
-	{
-		if (initialized)
-		{
-			std::wcout << L"Machine name: " << systemInfo.getName() << std::endl;
-			std::cout << "Machine ID: " << ID << std::endl;
-			std::wcout << L"Machine model: " << systemInfo.getModel() << std::endl;
-			std::wcout << L"Machine manufacturer: " << systemInfo.getManufacturer() << std::endl;
-			std::wcout << L"Operating system: " << operatingSystemInfo.getName() 
-				<< " " << operatingSystemInfo.getBitDepth() << L"-bit (" 
-				<< operatingSystemInfo.getMajorVersion() << L"." 
-				<< operatingSystemInfo.getMinorVersion() << L" , Build "
-				<< operatingSystemInfo.getBuild() << ")" << std::endl;
-			std::wcout << L"Language: " << operatingSystemInfo.getLanguage() << std::endl;
-			std::wcout << L"Memory: " << (float)(memory / 1024 / 1024) << " GB" << std::endl;
-			std::cout << std::endl;
-			std::wcout << L"Processor : " << processorInfo.getName() << L" " 
-				<< (float)processorInfo.getMaxClockSpeed()/1000 << L" GHz (" 
-				<< processorInfo.getCoresCount() << L" CPUs) ~" 
-				<< (float)processorInfo.getCurrentClockSpeed()/1000 << L" GHz" << std::endl;
-			std::wcout << L"Processor manufacturer: " << processorInfo.getManufacturer() << std::endl;
-			std::wcout << L"Processor version: " << processorInfo.getVersion() << std::endl;
-			std::wcout << L"Processor family: " << processorInfo.getFamily() << std::endl;
-			std::wcout << L"Processor architecture: " << processorInfo.getArchitecture() << std::endl;
-			std::cout << std::endl;
-
-			std::cout << "Display devices:" << std::endl;
-			std::cout << "=======================" << std::endl;
-			std::cout << "GPUs:" << std::endl;
-			std::cout << "=======================" << std::endl;
-
-			for (std::vector<GPUInfo>::iterator iter = videoCardsInfo.begin(); iter < videoCardsInfo.end(); iter++)
-			{
-				std::wcout << L"Card Name: " << iter->getName() << std::endl;
-				std::wcout << L"Card DAC type: " << iter->getDACType() << std::endl;
-				std::wcout << L"Card Dedicated Memory: " << iter->getMemory() << " MB" << std::endl;
-				std::wcout << L"Card Availability: " << iter->getAvailability() << std::endl;
-				if (static_cast<GPUInfo::DeviceAvailability>(iter->getIntAvailability()) == 
-					GPUInfo::DeviceAvailability::Running_Or_Full_Power)
-				{
-					std::cout << "Current Mode: " <<  iter->getHorizontalResolution()
-						<< "x" << iter->getVerticalResolution() << " ("
-						<< iter->getBitsPerPixel() << " bit) (" 
-						<< iter->getRefreshRate() << "Hz)"<< std::endl;
-				}
-				std::cout << std::endl;
-			}
-
-			std::cout << "=======================" << std::endl;
-			std::cout << "Monitors:" << std::endl;
-			std::cout << "=======================" << std::endl;
-			for (std::vector<MonitorInfo>::iterator iter = monitorsInfo.begin(); iter < monitorsInfo.end(); iter++)
-			{
-				std::wcout << L"Monitor Name: " << iter->getName() << std::endl;
-				std::wcout << L"Monitor Availability: " << iter->getAvailability() << std::endl;
-				if (static_cast<MonitorInfo::DeviceAvailability>(iter->getIntAvailability()) ==
-					MonitorInfo::DeviceAvailability::Running_Or_Full_Power)
-				{
-					std::cout << "Native Mode: " << iter->getScreenWidth()
-						<< "x" << iter->getScreenHeight() << "(p)" << std::endl;
-				}
-				std::cout << std::endl;
-			}
-
-			
-			std::cout << "Drives info:" << std::endl;
-			std::cout << "=======================" << std::endl;
-			for (std::vector<DriveInfo>::iterator iter = drivesInfo.begin(); iter < drivesInfo.end(); iter++)
-			{
-				std::wcout << L"Drive " << iter->getName() << std::endl;
-				std::wcout << L"Drive Type: " << iter->getType() << std::endl;
-				if (static_cast<DriveInfo::DriveType>(iter->getIntType()) ==
-					DriveInfo::DriveType::Local_Disk)
-				{
-					std::wcout << L"Free space: " << iter->getFreeSpace() << " GB" << std::endl;
-					std::wcout << L"Total Space: " << iter->getTotalSpace() << " GB" << std::endl;
-					std::wcout << L"File System: " << iter->getFileSystem() << std::endl;
-				}
-				std::cout << std::endl;
-			}
-
-		}
 	}
 
 	bool MachineInfo::isInitialized()
@@ -253,6 +171,90 @@ namespace mi
 			UUID = vtProp.bstrVal;
 
 			pclsObj->Release();
+		}
+	}
+
+	void printMachineInfo(const MachineInfo& mInfo)
+	{
+		if (mInfo.initialized)
+		{
+			std::wcout << L"Machine name: " << mInfo.systemInfo.getName() << std::endl;
+			std::cout << "Machine ID: " << mInfo.ID << std::endl;
+			std::wcout << L"Machine model: " << mInfo.systemInfo.getModel() << std::endl;
+			std::wcout << L"Machine manufacturer: " << mInfo.systemInfo.getManufacturer() << std::endl;
+			std::wcout << L"Operating system: " << mInfo.operatingSystemInfo.getName()
+				<< " " << mInfo.operatingSystemInfo.getBitDepth() << L"-bit ("
+				<< mInfo.operatingSystemInfo.getMajorVersion() << L"."
+				<< mInfo.operatingSystemInfo.getMinorVersion() << L" , Build "
+				<< mInfo.operatingSystemInfo.getBuild() << ")" << std::endl;
+			std::wcout << L"Language: " << mInfo.operatingSystemInfo.getLanguage() << std::endl;
+			std::wcout << L"Memory: " << (float)(mInfo.memory / 1024 / 1024) << " GB" << std::endl;
+			std::cout << std::endl;
+			std::wcout << L"Processor : " << mInfo.processorInfo.getName() << L" "
+				<< (float)mInfo.processorInfo.getMaxClockSpeed() / 1000 << L" GHz ("
+				<< mInfo.processorInfo.getCoresCount() << L" CPUs) ~"
+				<< (float)mInfo.processorInfo.getCurrentClockSpeed() / 1000 << L" GHz" << std::endl;
+			std::wcout << L"Processor manufacturer: " << mInfo.processorInfo.getManufacturer() << std::endl;
+			std::wcout << L"Processor version: " << mInfo.processorInfo.getVersion() << std::endl;
+			std::wcout << L"Processor family: " << mInfo.processorInfo.getFamily() << std::endl;
+			std::wcout << L"Processor architecture: " << mInfo.processorInfo.getArchitecture() << std::endl;
+			std::cout << std::endl;
+
+			std::cout << "Display devices:" << std::endl;
+			std::cout << "=======================" << std::endl;
+			std::cout << "GPUs:" << std::endl;
+			std::cout << "=======================" << std::endl;
+
+			for (auto iter = mInfo.videoCardsInfo.cbegin(); iter != mInfo.videoCardsInfo.cend(); iter++)
+			{
+				std::wcout << L"Card Name: " << iter->getName() << std::endl;
+				std::wcout << L"Card DAC type: " << iter->getDACType() << std::endl;
+				std::wcout << L"Card Dedicated Memory: " << iter->getMemory() << " MB" << std::endl;
+				std::wcout << L"Card Availability: " << iter->getAvailability() << std::endl;
+				if (static_cast<GPUInfo::DeviceAvailability>(iter->getIntAvailability()) ==
+					GPUInfo::DeviceAvailability::Running_Or_Full_Power)
+				{
+					std::cout << "Current Mode: " << iter->getHorizontalResolution()
+						<< "x" << iter->getVerticalResolution() << " ("
+						<< iter->getBitsPerPixel() << " bit) ("
+						<< iter->getRefreshRate() << "Hz)" << std::endl;
+				}
+				std::cout << std::endl;
+			}
+
+			std::cout << "=======================" << std::endl;
+			std::cout << "Monitors:" << std::endl;
+			std::cout << "=======================" << std::endl;
+			for (auto iter = mInfo.monitorsInfo.cbegin(); iter != mInfo.monitorsInfo.end(); iter++)
+			{
+				std::wcout << L"Monitor Name: " << iter->getName() << std::endl;
+				std::wcout << L"Monitor Availability: " << iter->getAvailability() << std::endl;
+				if (static_cast<MonitorInfo::DeviceAvailability>(iter->getIntAvailability()) ==
+					MonitorInfo::DeviceAvailability::Running_Or_Full_Power)
+				{
+					std::cout << "Native Mode: " << iter->getScreenWidth()
+						<< "x" << iter->getScreenHeight() << "(p)" << std::endl;
+				}
+				std::cout << std::endl;
+			}
+
+
+			std::cout << "Drives info:" << std::endl;
+			std::cout << "=======================" << std::endl;
+			for (auto iter = mInfo.drivesInfo.cbegin(); iter < mInfo.drivesInfo.cend(); iter++)
+			{
+				std::wcout << L"Drive " << iter->getName() << std::endl;
+				std::wcout << L"Drive Type: " << iter->getType() << std::endl;
+				if (static_cast<DriveInfo::DriveType>(iter->getIntType()) ==
+					DriveInfo::DriveType::Local_Disk)
+				{
+					std::wcout << L"Free space: " << iter->getFreeSpace() << " GB" << std::endl;
+					std::wcout << L"Total Space: " << iter->getTotalSpace() << " GB" << std::endl;
+					std::wcout << L"File System: " << iter->getFileSystem() << std::endl;
+				}
+				std::cout << std::endl;
+			}
+
 		}
 	}
 }

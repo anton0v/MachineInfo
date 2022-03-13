@@ -28,13 +28,8 @@ namespace mi
 				CoUninitialize();
 			}
 		}
-
 		void Init();
-
-		void getInfo();
-
 		bool isInitialized();
-		
 		SystemInfo systemInfo;
 		ProcessorInfo processorInfo;
 		OperatingSystemInfo operatingSystemInfo;
@@ -51,5 +46,9 @@ namespace mi
 		IWbemServices *pServices;
 		std::string ID;
 		bool initialized;
+
+		friend void printMachineInfo(const MachineInfo&);
 	};
+
+	void printMachineInfo(const MachineInfo&);
 }
