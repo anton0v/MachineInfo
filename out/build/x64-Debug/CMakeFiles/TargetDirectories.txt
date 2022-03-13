@@ -1,0 +1,4 @@
+C:/Users/User.000/source/repos/MachineInfo/out/build/x64-Debug/CMakeFiles/MachineInfo.dir
+C:/Users/User.000/source/repos/MachineInfo/out/build/x64-Debug/CMakeFiles/MILib.dir
+C:/Users/User.000/source/repos/MachineInfo/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/User.000/source/repos/MachineInfo/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir

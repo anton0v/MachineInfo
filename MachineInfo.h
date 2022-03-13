@@ -28,13 +28,9 @@ namespace mi
 				CoUninitialize();
 			}
 		}
-
 		void Init();
-
 		void getInfo();
-
 		bool isInitialized();
-		
 		SystemInfo systemInfo;
 		ProcessorInfo processorInfo;
 		OperatingSystemInfo operatingSystemInfo;

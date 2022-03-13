@@ -7,7 +7,9 @@ namespace mi
 		UUID(L""),
 		ID(""),
 		initialized(false),
-		memory(0)
+		memory(0),
+		pLocator(NULL),
+		pServices(NULL)
 	{}
 
 	void MachineInfo::Init()
@@ -35,12 +37,12 @@ namespace mi
 		MemoryInfoGenerator memoryGenerator;
 		memoryInfo = memoryGenerator.getMemoryInfo(pLocator, pServices);
 
-		for (std::vector<MemoryInfo>::iterator iter = memoryInfo.begin(); iter < memoryInfo.end(); iter++)
+		for (auto iter = memoryInfo.cbegin(); iter != memoryInfo.cend(); iter++)
 			memory += iter->getMemory();
 
 		getUUID();
 		std::wstring strForMD5 = UUID + processorInfo.getName();
-		for (std::vector<GPUInfo>::iterator iter = videoCardsInfo.begin(); iter < videoCardsInfo.end(); iter++)
+		for (auto iter = videoCardsInfo.cbegin(); iter != videoCardsInfo.cend(); iter++)
 			strForMD5 += iter->getName();
 
 		ID = md5(strForMD5);

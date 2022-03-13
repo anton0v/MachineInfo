@@ -1,8 +1,6 @@
 #include <iostream>
-#include <conio.h>
 #include <locale>
 #include <string>
-#include <vector>
 #include "MachineInfo.h"
 
 int main()
@@ -13,9 +11,8 @@ int main()
 	mi::MachineInfo myMachine;
 
 	myMachine.Init();
-
+	
 	myMachine.getInfo();
 
-	//getch();
 	return 0;
 }
